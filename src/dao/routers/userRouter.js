@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { userModel } from "../models/userModel.js";
-import { redirect } from "../../middlewares/redirect.js";
+import { loginAuth } from "../../middlewares/loginAutenticacion.js";
 
 export const userRouter = Router()
 
@@ -23,17 +23,16 @@ userRouter.post('/register', async (req,res) =>{
         const userCreate = await userModel.create({...req.body,...req.body.rol})
         // console.log(userCreate)
 
-        req.session.user = {
-            first_name:userCreate.first_name,
-            last_name:userCreate.last_name,
-            email:userCreate.email,
-            age:userCreate.age,
-            password:userCreate.password,
-            rol:req.body.rol          
-        }
+        // req.session.user = {
+        //     first_name:userCreate.first_name,
+        //     last_name:userCreate.last_name,
+        //     email:userCreate.email,
+        //     age:userCreate.age,
+        //     password:userCreate.password,
+        //     rol:req.body.rol          
+        // }
         
-        res.status(200).json(userCreate)
-        console.log(req.session)
+        return res.redirect('http://localhost:8080/login')
         
         // res.send({status:'correct', payload:userCreate})    
     // } catch (error) {
@@ -41,7 +40,7 @@ userRouter.post('/register', async (req,res) =>{
     // }
 })
 
-userRouter.post('/login', async (req,res) => {
+userRouter.post('/login' ,async (req,res) => {
     const usuario = await userModel.findOne({$and: [{email:req.body.email}, {password:req.body.password}]})
         if(!usuario){
             throw new Error('Usuario no encontrado')
@@ -65,9 +64,8 @@ userRouter.post('/login', async (req,res) => {
             rol:req.body.rol          
         }
 
-        console.log(req.session)
-
-        res.redirect('/profile')
+        return res.redirect('http://localhost:8080/profile')
+        
 
 })
 
@@ -76,6 +74,6 @@ userRouter.post('/logout' ,async (req,res) =>{
         if(err){
             return console.log(err)
         }
-        res.redirect('/login')
+        return res.redirect('/login')
     })
 })

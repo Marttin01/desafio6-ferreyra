@@ -2,7 +2,7 @@
 const formRegister = document.querySelector('#formRegister')
 if(formRegister instanceof HTMLFormElement){
     formRegister.addEventListener('submit', async evento =>{
-        evento.preventDefault()
+        // evento.preventDefault()
 
         const input_first_name = document.querySelector('#input_first_name')
         const input_last_name = document.querySelector('#input_last_name')

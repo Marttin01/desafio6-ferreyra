@@ -2,7 +2,7 @@ const formLogin = document.querySelector('#formLogin')
 
 if(formLogin instanceof HTMLFormElement){
     formLogin.addEventListener('submit', async event => {
-        event.preventDefault()
+        // event.preventDefault()
 
         const input_email = document.querySelector('#input_email')
         const input_password = document.querySelector('#input_password')
